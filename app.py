@@ -27,34 +27,36 @@ def parse_json(arg1, arg2, arg3):
     dictionary = {**arg1, **arg2, **arg3}
     return json.dumps(dictionary)
 
-#Emploeey
+#Employee
 
-def salary_emploeey():
-    if self.exp > 2 and self.exp < 5:
-        self.salary = int(self.salary) + 200
-    elif self.exp > 5:
-        self.salary = int(self.salary)*1.2 +  500
-    return int(self.salary)
+#def salary_employee(dict_team, dict_emp):
+#    if self.exp > 2 and self.exp < 5:
+#        self.salary = int(self.salary) + 200
+#    elif self.exp > 5:
+#        self.salary = int(self.salary)*1.2 +  500
+#    return int(self.salary)
 
 
 
 #Manager
-def salary_manager():
-    if len(self._team) > 5:
-        self.salary = super().get_salary() + 200
-    elif len(self._team) > 10:
-        self.salary = super().get_salary() + 300
-    elif sum(type(i) == developer for i in self._team) > len(self._team) / 2:
-        self.salary = super().get_salary()*1.1
-    print(int(self.salary))
-    return (int(self.salary))
+#def salary_manager(dict_team, dict_emp):
+#    if len(self._team) > 5:
+#        self.salary = super().get_salary() + 200
+#    elif len(self._team) > 10:
+#        self.salary = super().get_salary() + 300
+#    elif sum(type(i) == developer for i in self._team) > len(self._team) / 2:
+#        self.salary = super().get_salary()*1.1
+#    print(int(self.salary))
+#    return (int(self.salary))
 
 #Designer
 
-def salary_designer():
-    self.salary = super().get_salary()*self.coeff
-    print (self.salary)
-    return int(self.salary)
+def salary_designer(dict_emp):
+    for i in dict_emp['Employee']:
+        if i['position'] == "Designer":
+            i['salary'] = int(i['salary'])*i['coefficient']
+        else:
+            pass
 
 
 @app.route('/get', methods=['GET'])
@@ -70,6 +72,7 @@ def get_one():
     dep = json.loads(dep)
     emp = json.loads(emp)
     team = json.loads(team)
+    salary_designer(emp)
     res = parse_json(dep, team, emp)
     return res
 
