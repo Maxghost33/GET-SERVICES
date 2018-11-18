@@ -29,32 +29,50 @@ def parse_json(arg1, arg2, arg3):
 
 #Employee
 
-#def salary_employee(dict_team, dict_emp):
-#    if self.exp > 2 and self.exp < 5:
-#        self.salary = int(self.salary) + 200
-#    elif self.exp > 5:
-#        self.salary = int(self.salary)*1.2 +  500
-#    return int(self.salary)
+def salary_employee(dict_emp):
+    for i in dict_emp['Employee']:
+        if i['exp'] > 2 and i['exp'] < 5:
+            i['salary'] = int(int(i['salary']) + 200)
+        elif i['exp'] > 5:
+            i['salary'] = int(int(i['salary'])*1.2 +  500)
+        else:
+            pass
 
 
 
 #Manager
-#def salary_manager(dict_team, dict_emp):
-#    if len(self._team) > 5:
-#        self.salary = super().get_salary() + 200
-#    elif len(self._team) > 10:
-#        self.salary = super().get_salary() + 300
-#    elif sum(type(i) == developer for i in self._team) > len(self._team) / 2:
-#        self.salary = super().get_salary()*1.1
-#    print(int(self.salary))
-#    return (int(self.salary))
+def salary_manager(dict_team, dict_emp):
+    count = 0
+    for i in dict_team['Team']:
+        for j in dict_emp['Employee']:
+            if j['position'] != "Manager" and j['team_id'] == i['team_id']:
+                count += 1
+        for k in dict_emp['Employee']:
+            if count > 5 and dict_emp['Employee']['position'] == 'Manager' and k['team_id'] == i['team_id']:
+                k['salary'] += 200
+            elif count > 10 and dict_emp['Employee']['position'] == 'Manager' and k['team_id'] == i['team_id']:
+                k['salary'] += 300
+            elif count_dev(dict_team, dict_emp) > count / 2 and k['position'] == 'Manager' and k['team_id'] == i['team_id']:
+                k['salary'] = int(int(k['salary'])*1.1)
+            else:
+                pass
+
+def count_dev(dict_team, dict_emp):
+    count = 0
+    for i in dict_team['Team']:
+        for j in dict_emp['Employee']:
+            if j['position'] == 'Developer':
+                count += 1
+            else:
+                pass
+    return count
 
 #Designer
 
 def salary_designer(dict_emp):
     for i in dict_emp['Employee']:
         if i['position'] == "Designer":
-            i['salary'] = int(i['salary'])*i['coefficient']
+            i['salary'] = int(int(i['salary'])*i['coefficient'])
         else:
             pass
 
@@ -73,6 +91,8 @@ def get_one():
     emp = json.loads(emp)
     team = json.loads(team)
     salary_designer(emp)
+    salary_employee(emp)
+    salary_manager(team, emp)
     res = parse_json(dep, team, emp)
     return res
 
