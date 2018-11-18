@@ -12,15 +12,26 @@ URL_ALL = 'http://127.0.0.1:5001/get-info'
 
 def get_dep():
     r = requests.get(URL_DEP)
-    return r.content
+    if r.status_code == 200:
+        return r.content
+    else:
+        return (r.status_code, r.headers)
 
 def get_empl():
     re = requests.get(URL_EMPL)
-    return re.content
+    if re.status_code == 200:
+        return re.content
+    else:
+        return (re.status_code, re.headers)
+
 
 def get_team():
     req = requests.get(URL_TEAM)
-    return req.content
+    if req.status_code == 200:
+        return req.content
+    else:
+        return (req.status_code, req.headers)
+
 
 def parse_json(arg1, arg2, arg3):
     dictionary = {}
