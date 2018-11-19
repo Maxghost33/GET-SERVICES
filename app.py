@@ -4,10 +4,10 @@ import requests
 
 app = Flask(__name__)
 
-URL_DEP = 'http://127.0.0.1:5001/get-dep'
-URL_EMPL = 'http://127.0.0.1:5001/get-empl'
-URL_TEAM = 'http://127.0.0.1:5001/get-team'
-URL_ALL = 'http://127.0.0.1:5001/get-info'
+URL_DEP = 'http://127.0.0.1:5002/get-dep'
+URL_EMPL = 'http://127.0.0.1:5002/get-empl'
+URL_TEAM = 'http://127.0.0.1:5002/get-team'
+URL_ALL = 'http://127.0.0.1:5002/get-info'
 
 
 def get_dep():
@@ -105,6 +105,7 @@ def get_one():
     salary_employee(emp)
     salary_manager(team, emp)
     res = parse_json(dep, team, emp)
+    #res = {'name':'text'}
     return res
 
 
